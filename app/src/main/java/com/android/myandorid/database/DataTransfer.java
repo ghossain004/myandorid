@@ -2,6 +2,7 @@ package com.android.myandorid.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -35,10 +36,10 @@ public class DataTransfer extends SQLiteOpenHelper {
 //        "password TEXT)";
 
         String query2 = "CREATE TABLE " + TABLE_NAME + "("
-                + ID_COL + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + USER_NAME_COL + "TEXT,"
-                + EMAIL_COL + "TEXT,"
-                + PASSWORD_COL + "TEXT)";
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + USER_NAME_COL + " TEXT,"
+                + EMAIL_COL + " TEXT,"
+                + PASSWORD_COL + " TEXT)";
 
         sqLiteDatabase.execSQL(query2);
     }
@@ -51,9 +52,23 @@ public class DataTransfer extends SQLiteOpenHelper {
     public void addNewUser(String userName, String email, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values =  new ContentValues();
-        values.put("user_name", userName);
-        values.put("user_name", userName);
-        values.put("user_name", userName);
+        values.put(USER_NAME_COL, userName);
+        values.put(EMAIL_COL, email);
+        values.put(PASSWORD_COL, password);
         db.insert(TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public int login(String userName, String password){
+
+        String[] arr = new String[2];
+        arr[0] = userName;
+        arr[1] = password;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from user where userName=? and password=? ", arr);
+        if (c.moveToFirst()){
+            return 1;
+        }
+        return 0;
     }
 }
