@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.android.myandorid.entity.Doctor;
+
 public class DataTransfer extends SQLiteOpenHelper {
     public DataTransfer(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -41,7 +43,14 @@ public class DataTransfer extends SQLiteOpenHelper {
                 + EMAIL_COL + " TEXT,"
                 + PASSWORD_COL + " TEXT)";
 
+        String query3 = "CREATE TABLE " + "doctors" + "("
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "doctorName" + " TEXT,"
+                + "email" + " TEXT,"
+                + "address" + " TEXT)";
+
         sqLiteDatabase.execSQL(query2);
+        sqLiteDatabase.execSQL(query3);
     }
 
     @Override
@@ -56,6 +65,16 @@ public class DataTransfer extends SQLiteOpenHelper {
         values.put(EMAIL_COL, email);
         values.put(PASSWORD_COL, password);
         db.insert(TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public void addDoctor(Doctor doctor){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values =  new ContentValues();
+        values.put("doctorName", doctor.getDoctorName());
+        values.put("email", doctor.getEmail());
+        values.put("address", doctor.getAddress());
+        db.insert("doctors", null, values);
         db.close();
     }
 

@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class HomeActivity extends AppCompatActivity {
 
     TextView tv1, tv2;
-    Button btnLogout;
+    Button btnLogout, btnAddDoctor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,8 @@ public class HomeActivity extends AppCompatActivity {
 //        tv1 = findViewById(R.id.textViewHomeTitle1);
 //        tv2 = findViewById(R.id.textViewHomeTitle2);
         btnLogout = findViewById(R.id.buttonHomeLogout);
+        btnAddDoctor = findViewById(R.id.buttonAddDoctor);
+
 
 //        Intent it = getIntent();
 //        String uname = it.getStringExtra("username");
@@ -43,6 +45,14 @@ public class HomeActivity extends AppCompatActivity {
                 editor.clear();
                 editor.apply();
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));
+                Toast.makeText(getApplicationContext(),"Logout success",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnAddDoctor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, DoctorDetailsActivity.class));
             }
         });
     }
