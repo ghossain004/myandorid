@@ -42,7 +42,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
                 dc.setEmail(doctorEmail);
                 dc.setAddress(doctorAddress);
 
-                DataTransfer dt = new DataTransfer(getApplicationContext(), "socialbook", null, 1);
+                DataTransfer dt = new DataTransfer(getApplicationContext(), "healthcare", null, 1);
                 if (doctorName.length()==0 || doctorEmail.length()==0 || doctorAddress.length()==0){
                     Toast.makeText(getApplicationContext(), "Please Fill All The Field", Toast.LENGTH_SHORT).show();
                 }else {

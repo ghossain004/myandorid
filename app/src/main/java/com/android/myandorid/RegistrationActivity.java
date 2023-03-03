@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.android.myandorid.database.DataTransfer;
 
 public class RegistrationActivity extends AppCompatActivity {
-    EditText userName, email, password, confirmPassword;
+    EditText edfullName, eduserName, edemail, edmobile, edpassword, edconfirmPassword;
     Button btnSignup;
     TextView tvLogin;
 
@@ -22,29 +22,33 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        userName = findViewById(R.id.editTextRegistrationUsername);
-        email = findViewById(R.id.editTextRegistrationEmail);
-        password = findViewById(R.id.editTextRegistrationPassword);
-        confirmPassword = findViewById(R.id.editTextRegistrationConfirmPassword);
+        edfullName = findViewById(R.id.editTextRegistrationFullName);
+        eduserName = findViewById(R.id.editTextRegistrationUsername);
+        edemail = findViewById(R.id.editTextRegistrationEmail);
+        edmobile = findViewById(R.id.editTextRegistrationMobile);
+        edpassword = findViewById(R.id.editTextRegistrationPassword);
+        edconfirmPassword = findViewById(R.id.editTextRegistrationConfirmPassword);
         btnSignup = findViewById(R.id.buttonRegistrationSignup);
         tvLogin = findViewById(R.id.textViewRegistrationLogin);
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String _userName = userName.getText().toString();
-                String _email = email.getText().toString();
-                String _password = password.getText().toString();
-                String _confirmPassword = confirmPassword.getText().toString();
-//                System.out.println(_userName);
+                String fullName = edfullName.getText().toString();
+                String userName = eduserName.getText().toString();
+                String email = edemail.getText().toString();
+                String mobile = edmobile.getText().toString();
+                String password = edpassword.getText().toString();
+                String confirmPassword = edconfirmPassword.getText().toString();
+                System.out.println(fullName + " " + userName + " " + email + " " + mobile + " " + password + " " + confirmPassword);
 
-                DataTransfer dt = new DataTransfer(getApplicationContext(), "socialbook", null, 1);
-                if (_userName.length()==0 || _password.length()==0 || _confirmPassword.length()==0 || _email.length()==0){
+                DataTransfer dt = new DataTransfer(getApplicationContext(), "healthcare", null, 1);
+                if (fullName.length()==0 || userName.length()==0 || mobile.length()==0 || password.length()==0 || confirmPassword.length()==0 || email.length()==0){
                     Toast.makeText(getApplicationContext(), "Please Fill All The Field", Toast.LENGTH_SHORT).show();
                 }else {
-                    if (_password.compareTo(_confirmPassword)==0){
-                        if (_password.length()>6){
-                            dt.addNewUser(_userName, _email, _password);
+                    if (password.compareTo(confirmPassword)==0){
+                        if (password.length()>6){
+                            dt.addNewUser(userName, email, password);
                             Toast.makeText(getApplicationContext(), "User Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                         }else {

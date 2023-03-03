@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_image_3"
+    android:background="@drawable/wall_8"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/textViewLoginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="socialbook"
+        android:text="Doctors App"
         android:textColor="#4254f5"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -75,7 +75,7 @@
         android:id="@+id/textViewSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Don't have any account? Please Signup here"
+        android:text="Don't have any account? Please Create here"
         android:textColor="#0515f5"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
