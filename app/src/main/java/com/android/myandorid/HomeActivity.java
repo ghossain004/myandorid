@@ -1,6 +1,7 @@
 package com.android.myandorid;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +15,8 @@ import android.widget.Toast;
 public class HomeActivity extends AppCompatActivity {
 
     TextView tv1, tv2;
-    Button btnLogout, btnAddDoctor;
+    Button btnLogout, btnAddDoctor, btnListView;
+    CardView cvLogout, cvAddDoctor, cvListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,10 @@ public class HomeActivity extends AppCompatActivity {
 //        tv2 = findViewById(R.id.textViewHomeTitle2);
         btnLogout = findViewById(R.id.buttonHomeLogout);
         btnAddDoctor = findViewById(R.id.buttonAddDoctor);
+        btnListView = findViewById(R.id.listView);
+        cvLogout = findViewById(R.id.cardLogout);
+        cvAddDoctor = findViewById(R.id.cardAddDoctor);
+        cvListView = findViewById(R.id.cardFindDoctor);
 
 
 //        Intent it = getIntent();
@@ -38,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
         String userName = sharedPreferences.getString("userName","").toString();
         Toast.makeText(getApplicationContext(),"Welcome "+userName+"!",Toast.LENGTH_SHORT).show();
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        cvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -49,10 +55,17 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        btnAddDoctor.setOnClickListener(new View.OnClickListener() {
+        cvAddDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeActivity.this, DoctorDetailsActivity.class));
+            }
+        });
+
+        cvListView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this, DcotorListActivity.class));
             }
         });
     }

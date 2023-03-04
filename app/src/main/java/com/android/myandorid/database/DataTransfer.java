@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 
 import com.android.myandorid.entity.Doctor;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class DataTransfer extends SQLiteOpenHelper {
     public DataTransfer(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -89,5 +92,24 @@ public class DataTransfer extends SQLiteOpenHelper {
             return 1;
         }
         return 0;
+    }
+
+    public ArrayList<HashMap<String, String>> getEmployees(){
+        HashMap<String, String> user;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from user", null);
+        ArrayList<HashMap<String, String>> userList = new ArrayList<>(c.getCount());
+        if (c.moveToFirst()){
+            do{
+                user = new HashMap<>();
+                user.put("id", c.getString(0));
+                user.put("userName", c.getString(1));
+                user.put("email", c.getString(2));
+                user.put("password", c.getString(3));
+                userList.add(user);
+            }while (c.moveToNext());
+        }
+        db.close();
+        return userList;
     }
 }
