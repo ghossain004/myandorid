@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.android.myandorid.entity.Doctor;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,8 +30,10 @@ public class DataTransfer extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "user";
     private static final String ID_COL = "id";
+    private static final String USER_FULL_NAME_COL = "fullName";
     private static final String USER_NAME_COL = "userName";
     private static final String EMAIL_COL = "email";
+    private static final String MOBILE_COL = "mobile";
     private static final String PASSWORD_COL = "password";
 
     @Override
@@ -43,7 +46,9 @@ public class DataTransfer extends SQLiteOpenHelper {
         String query2 = "CREATE TABLE " + TABLE_NAME + "("
                 + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + USER_NAME_COL + " TEXT,"
+                + USER_FULL_NAME_COL + " TEXT,"
                 + EMAIL_COL + " TEXT,"
+                + MOBILE_COL + " TEXT,"
                 + PASSWORD_COL + " TEXT)";
 
         String query3 = "CREATE TABLE " + "doctors" + "("
@@ -61,11 +66,13 @@ public class DataTransfer extends SQLiteOpenHelper {
 
     }
 
-    public void addNewUser(String userName, String email, String password){
+    public void addNewUser(String fullName, String userName, String email, String mobile, String password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values =  new ContentValues();
+        values.put(USER_FULL_NAME_COL, fullName);
         values.put(USER_NAME_COL, userName);
         values.put(EMAIL_COL, email);
+        values.put(MOBILE_COL, mobile);
         values.put(PASSWORD_COL, password);
         db.insert(TABLE_NAME, null, values);
         db.close();
@@ -97,19 +104,37 @@ public class DataTransfer extends SQLiteOpenHelper {
     public ArrayList<HashMap<String, String>> getEmployees(){
         HashMap<String, String> user;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("select * from user", null);
+        Cursor c = db.rawQuery("select * from doctors", null);
         ArrayList<HashMap<String, String>> userList = new ArrayList<>(c.getCount());
         if (c.moveToFirst()){
             do{
                 user = new HashMap<>();
                 user.put("id", c.getString(0));
-                user.put("userName", c.getString(1));
+                user.put("doctorName", c.getString(1));
                 user.put("email", c.getString(2));
-                user.put("password", c.getString(3));
+                user.put("address", c.getString(3));
                 userList.add(user);
             }while (c.moveToNext());
         }
         db.close();
         return userList;
+    }
+
+    public boolean deleteDoctor(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowCount = db.delete(TABLE_NAME, "id = ?", new String[]{id + ""});
+        db.close();
+        return rowCount>0;
+    }
+
+    public boolean updateDoctor(Doctor doctor){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values =  new ContentValues();
+        values.put("doctorName", doctor.getDoctorName());
+        values.put("email", doctor.getEmail());
+        values.put("address", doctor.getAddress());
+        long result = db.update("doctors", values, "id = ?", new String[]{doctor.getId() + ""});
+        db.close();
+        return result > 0;
     }
 }

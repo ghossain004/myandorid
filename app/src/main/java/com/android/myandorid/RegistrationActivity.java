@@ -47,8 +47,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please Fill All The Field", Toast.LENGTH_SHORT).show();
                 }else {
                     if (password.compareTo(confirmPassword)==0){
-                        if (password.length()>6){
-                            dt.addNewUser(userName, email, password);
+                        if (password.length()>=6){
+                            dt.addNewUser(fullName, userName, email, mobile, password);
                             Toast.makeText(getApplicationContext(), "User Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
                         }else {

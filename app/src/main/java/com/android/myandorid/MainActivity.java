@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.editTextTextLoginPassword);
         btnLogin = findViewById(R.id.buttonLogin);
         tvSignup = findViewById(R.id.textViewSignup);
-        DataTransfer dt = new DataTransfer(getApplicationContext(), "socialbook", null,1);
+        DataTransfer dt = new DataTransfer(getApplicationContext(), "healthcare", null,1);
 
         tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
