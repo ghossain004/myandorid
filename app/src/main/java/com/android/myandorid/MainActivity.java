@@ -6,9 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,12 +20,13 @@ import com.android.myandorid.database.DataTransfer;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText userName, password;
+    Button btnLogin;
+    TextView tvSignup;
+    boolean passwordVisible;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        EditText userName, password;
-        Button btnLogin;
-        TextView tvSignup;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -40,6 +45,30 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(it);
 
                 startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
+            }
+        });
+
+        password.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                final int RIGHT = 2;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    if (motionEvent.getRawX()>= password.getRight()-password.getCompoundDrawables()[RIGHT].getBounds().width()){
+                        int selection = password.getSelectionEnd();
+                        if (passwordVisible){
+                            password.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.show_pass, 0);
+                            password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            passwordVisible = false;
+                        }else {
+                            password.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.show_pass, 0);
+                            password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            passwordVisible = true;
+                        }
+                        password.setSelection(selection);
+                        return true;
+                    }
+                }
+                return false;
             }
         });
 
