@@ -50,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.apply();
+                editor.commit();
+                finish();
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));
                 Toast.makeText(getApplicationContext(),"Logout success",Toast.LENGTH_SHORT).show();
             }
